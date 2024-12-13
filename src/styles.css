@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@import './styles/globals.css';
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: Add any custom base styles */
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+

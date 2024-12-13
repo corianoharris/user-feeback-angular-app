@@ -10,16 +10,17 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   template: `
-    <main class="main">
-      <div class="content">
-        <app-user-form>
-          <!-- If you want to pass content to the user form component -->
-          <ng-container *ngIf="children">
-            {{children}}
-          </ng-container>
-        </app-user-form>
-      </div>
-    </main>
+   <main class="min-h-screen bg-gray-100 p-4">
+  <div class="max-w-4xl mx-auto my-auto bg-white p-6 rounded-lg shadow-lg">
+    <app-user-form>
+      <!-- If you want to pass content to the user form component -->
+      <ng-container *ngIf="children">
+        {{children}}
+      </ng-container>
+    </app-user-form>
+  </div>
+</main>
+
   `,
   styles: [`
     /* You can move the styles from the commented-out section here if needed */
@@ -41,8 +42,9 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class AppComponent {
-  title(title: string)
+export class AppComponent
+{
+  title(title: any)
   {
     throw new Error('Method not implemented.');
   }
