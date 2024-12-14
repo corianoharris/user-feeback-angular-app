@@ -1,21 +1,22 @@
 import { Component, inject } from '@angular/core';
 import
-    {
-        FormBuilder,
-        FormGroup,
-        Validators,
-        ReactiveFormsModule
-    } from '@angular/forms';
+{
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserDataService, UserData } from '../../core/services/user-data.service';
+import SubmissionsComponent from '../submissions/submissions.component';
 
 @Component({
-    selector: 'app-user-form',
-    standalone: true,
-    imports: [ReactiveFormsModule, CommonModule],
-    template: `
+  selector: 'app-user-form',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, SubmissionsComponent],
+  template: `
     <div class="max-w-full mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold mb-6 text-center">Hello,User Feedback</h2>
+      <h2 class="text-2xl font-bold mb-6 text-center">User Feedback</h2>
       <div class="mb-4 max-w-full mx-auto mt-10 p-6 bg-white rounded-lg flex justify-between gap-10" [formGroup]="userForm">
 
           <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="space-y-4 n flex-1">
@@ -67,7 +68,7 @@ import { UserDataService, UserData } from '../../core/services/user-data.service
             <div class="flex space-x-4">
               <button 
                 type="submit" 
-                [disabled]="userForm.invalid"
+                [disabled]="userForm.invalid || submissions().length > 5"
                 class="flex-grow bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300 disabled:opacity-50"
               >
                 Submit
@@ -75,45 +76,17 @@ import { UserDataService, UserData } from '../../core/services/user-data.service
               <button 
                 type="button"
                 (click)="clearSubmissions()"
-                *ngIf="submissions().length"
+                *ngIf="submissions().length > 0 && submissions().length < 5"
                 class="flex-grow bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition duration-300"
+                [disabled]="submissions().length > 5"
+                
               >
                 Clear Submissions
               </button>
             </div>
           </form>
 
-          <div *ngIf="submissions().length" class="mt-8 flex-1 snap-y overflow-y-scroll max-h-[400px]">
-            <div class="mb-4 flex justify-between align-middle">
-            <div>
-            <h3 class="text-xl font-bold">Recent Submissions</h3>
-            <p class="text-sm text-gray-500 mb-2">Maximum of 5 submissions</p>
-            </div>
-             <h5 class="text-sm text-gray-500 font-bold">{{ submissions().length }} / {{''}} 5 </h5>
-            </div>
-           
-            
-            <div 
-              *ngFor="let submission of submissions()" 
-              class="bg-gray-100 p-4 rounded-lg mb-2 flex justify-between items-center shadow-md"
-            >
-              <div>
-                <p><strong>Name:</strong> {{ submission.name }}</p>
-                <p><strong>Email:</strong> {{ submission.email }}</p>
-                <p><strong>Message:</strong> {{ submission.message }}</p>
-                <p class="text-sm text-gray-500 hover:text-gray-700">
-                  Submitted: {{ submission.createdAt }}
-                </p>
-              </div>
-              <button 
-                (click)="removeSubmission(submission.id)"
-                class="text-red-500 hover:text-red-700"
-                title="Remove Submission"
-              >
-                ❌
-              </button>
-            </div>
-          </div>
+           <app-submissions></app-submissions>      
       </div>
 
     </div>
@@ -121,39 +94,39 @@ import { UserDataService, UserData } from '../../core/services/user-data.service
 })
 export class UserFormComponent
 {
-    private userDataService = inject(UserDataService);
-    private fb = inject(FormBuilder);
+  private userDataService = inject(UserDataService);
+  private fb = inject(FormBuilder);
 
-    userForm: FormGroup;
-    submissions = this.userDataService.submissions;
+  userForm: FormGroup;
+  submissions = this.userDataService.submissions;
 
-    constructor()
+  constructor()
+  {
+    this.userForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      message: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
+
+  onSubmit()
+  {
+    if (this.userForm.valid)
     {
-        this.userForm = this.fb.group({
-            name: ['', [Validators.required, Validators.minLength(2)]],
-            email: ['', [Validators.required, Validators.email]],
-            message: ['', [Validators.required, Validators.minLength(10)]]
-        });
+      this.userDataService.addSubmission(this.userForm.value);
+      this.userForm.reset();
     }
+  }
 
-    onSubmit()
-    {
-        if (this.userForm.valid)
-        {
-            this.userDataService.addSubmission(this.userForm.value);
-            this.userForm.reset();
-        }
-    }
+  removeSubmission(id: string)
+  {
+    this.userDataService.removeSubmission(id);
+  }
 
-    removeSubmission(id: string)
-    {
-        this.userDataService.removeSubmission(id);
-    }
-
-    clearSubmissions()
-    {
-        this.userDataService.clearSubmissions();
-    }
+  clearSubmissions()
+  {
+    this.userDataService.clearSubmissions();
+  }
 }
 
 export default UserFormComponent;
