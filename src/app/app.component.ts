@@ -11,7 +11,9 @@ import { CommonModule } from '@angular/common';
   ],
   template: `
    <main class="min-h-screen bg-gray-100 p-4">
-    <h1 class="text-3xl font-bold mb-4">Hello, {{title}}!</h1>
+   <h1 class="text-3xl font-bold mb-4">
+  {{ getGreeting() }}
+</h1>
   <div class="max-w-4xl mx-auto my-auto bg-white p-6 rounded-lg shadow-lg">
     <app-user-form title="User Feedback">
       <!-- If you want to pass content to the user form component -->
@@ -45,7 +47,20 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent
 {
-  title = 'User Feedback';
+  title?: string = 'User Feedback';
+  time: string = new Date().toLocaleTimeString('en-US', { hour12: false });;
+
+  getGreeting(): string {
+    const hour = parseInt(this.time.split(':')[0], 10);
+    
+    if (hour >= 5 && hour < 12) {
+      return 'Good morning';
+    } else if (hour >= 12 && hour < 18) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
+  }
   // Optional: if you want to pass children content
   children: string | undefined;
 }
