@@ -11,8 +11,9 @@ import { CommonModule } from '@angular/common';
   ],
   template: `
    <main class="min-h-screen bg-gray-100 p-4">
+    <h1 class="text-3xl font-bold mb-4">Hello, {{title}}!</h1>
   <div class="max-w-4xl mx-auto my-auto bg-white p-6 rounded-lg shadow-lg">
-    <app-user-form>
+    <app-user-form title="User Feedback">
       <!-- If you want to pass content to the user form component -->
       <ng-container *ngIf="children">
         {{children}}
@@ -44,10 +45,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent
 {
-  title(title: any)
-  {
-    throw new Error('Method not implemented.');
-  }
+  title = 'User Feedback';
   // Optional: if you want to pass children content
   children: string | undefined;
 }
