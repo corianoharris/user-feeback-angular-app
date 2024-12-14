@@ -1,27 +1,115 @@
-# UserFeedbackAngularApp
+# Angular User Feedback Form with Signal-Based State Management
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
+## 🚀 Project Overview
 
-## Development server
+This is a modern Angular application demonstrating best practices in state management, form handling, and component architecture using Angular's latest features, including signals and standalone components.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Key Features
+- 📝 Reactive Form with Validation
+- 💾 Local Storage Persistence
+- 🔄 Signal-Based State Management
+- 🎨 Tailwind CSS Styling
+- 🧪 Comprehensive Testing (Unit & E2E)
 
-## Code scaffolding
+## 🛠 Technologies Used
+- Angular 17+
+- TypeScript
+- Tailwind CSS
+- RxJS
+- Signals
+- Playwright
+- Cypress
+- Jest
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 📋 Prerequisites
+- Node.js (v18+)
+- npm (v9+)
+- Angular CLI
 
-## Build
+## 🔧 Setup and Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 1. Clone the Repository
 
-## Running unit tests
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 3. Development Server
+```bash
+# Start development server
+npm start
 
-## Running end-to-end tests
+# Navigate to
+http://localhost:4200/
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🧪 Running Tests
 
-## Further help
+### Unit Tests
+```bash
+# Run unit tests
+npm test
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# Run with coverage
+npm run test:coverage
+```
+
+### E2E Tests
+```bash
+# Playwright tests
+npm run playwright
+
+# Cypress tests
+npm run cypress
+```
+
+## 📂 Same Project Structure
+```
+src/
+├── app/
+│   ├── core/              # Core services and interfaces
+│   ├── features/          # Feature-specific components
+│   ├── shared/            # Shared components and utilities
+│   └── app.config.ts      # App configuration
+├── assets/                # Static assets
+└── styles/                # Global styles
+```
+
+## 🌟 Key Components
+- `UserFormComponent`: Main form for collecting user feedback
+- `UserDataService`: State management service using signals
+- `FormErrorComponent`: Reusable form validation error display
+
+## 🔍 State Management
+The application uses Angular's new signal-based state management:
+- Centralized state in `UserDataService`
+- Reactive signals for data updates
+- Local storage integration
+
+## 🎨 Styling
+- Tailwind CSS for responsive and utility-first design
+- Custom theme configuration
+- Responsive layout
+
+## 🚀 Deployment
+
+
+## 🤝 Contributing
+
+
+## 📄 License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 📞 Contact
+Coriano Harris - corianoharrispro@gmail.com
+
+
+
+---
+
+## 🔮 Future Improvements
+- [ ] Add user authentication
+- [ ] Implement advanced filtering
+- [ ] Create admin dashboard
+- [ ] Add internationalization support
